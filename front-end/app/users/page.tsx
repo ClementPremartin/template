@@ -1,4 +1,4 @@
-import ProductCard from "../components/ProductCard";
+import ProductCard from '../components/ProductCard'
 
 const usersPage = () => {
   return (
@@ -6,8 +6,7 @@ const usersPage = () => {
       <div>usersPage</div>
       <ProductCard />
     </>
-  );
-};
+  )
+}
 
-export default usersPage;
-
+export default usersPage

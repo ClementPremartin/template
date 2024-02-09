@@ -1,4 +1,4 @@
-import AddToCart from "./AddToCart";
+import AddToCart from './AddToCart'
 
 const ProductCard = () => {
   return (
@@ -8,8 +8,7 @@ const ProductCard = () => {
         <AddToCart />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductCard;
-
+export default ProductCard

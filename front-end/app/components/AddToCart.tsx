@@ -1,12 +1,11 @@
-"use client";
+'use client'
 
 const AddToCart = () => {
   return (
     <div>
-      <button onClick={() => console.log("Add to cart")}>Add to Cart</button>
+      <button onClick={() => console.log('Add to cart')}>Add to Cart</button>
     </div>
-  );
-};
+  )
+}
 
-export default AddToCart;
-
+export default AddToCart
