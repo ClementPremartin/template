@@ -7,13 +7,13 @@ export default class AppUser {
   ) {
     this.firstName = firstName
     this.lastName = lastName
-    this.emailAddress = emailAddress
+    this.email = emailAddress
     this.hashedPassword = hashedPassword
   }
 
   id: string
 
-  emailAddress: string
+  email: string
 
   firstName: string
 
