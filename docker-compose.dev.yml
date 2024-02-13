@@ -32,6 +32,8 @@ services:
     image: postgres:14.5-alpine
     environment:
       POSTGRES_PASSWORD: password
+      POSTGRES_USER: clem
+      POSTGRES_DB: swell_share
     volumes:
       - database-content:/var/lib/postgresql/data
     expose:
@@ -40,7 +42,7 @@ services:
   test-database:
     image: postgres:14.5-alpine
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: passwordclem
     expose:
       - 5432
 
