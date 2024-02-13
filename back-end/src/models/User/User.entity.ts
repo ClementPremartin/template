@@ -1,23 +1,24 @@
-export default class User {
-  constructor(
-    firstName: string,
-    lastName: string,
-    emailAddress: string,
-    hashedPassword: string
-  ) {
-    this.firstName = firstName
-    this.lastName = lastName
-    this.email = emailAddress
-    this.hashedPassword = hashedPassword
-  }
+import { extendType, list, objectType } from 'nexus'
+import UserResolver from '../../resolvers/User/User.resolver'
 
-  id: string
+const userResolver = new UserResolver()
 
-  email: string
+export const getUsers = extendType({
+  type: 'Query',
+  definition: (t) => {
+    t.field('getUsers', {
+      type: list(User),
+      resolve: userResolver.getUsers,
+    })
+  },
+})
 
-  firstName: string
-
-  lastName: string
-
-  hashedPassword: string
-}
+export const User = objectType({
+  name: 'User',
+  definition: (t) => {
+    t.int('id')
+    t.string('email')
+    t.string('firstname')
+    t.string('lastname')
+  },
+})
