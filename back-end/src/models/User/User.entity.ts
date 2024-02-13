@@ -1,4 +1,4 @@
-export default class AppUser {
+export default class User {
   constructor(
     firstName: string,
     lastName: string,
