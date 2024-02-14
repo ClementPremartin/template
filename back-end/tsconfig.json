@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "rootDirs": ["src"],
+    "rootDir": "./src",
     "outDir": "build",
-    "lib": ["es2020"],
-    "target": "es2020",
-    "module": "esnext",
+    "target": "es2018",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": ["node"]
-  }
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "build"]
 }

@@ -3,9 +3,13 @@ FROM node:lts-alpine as base
 WORKDIR /app
 
 COPY package*.json ./
+COPY prisma ./prisma/
+
 RUN npm install
 
 COPY . ./
+
+RUN npx prisma generate
 
 FROM base as build
 COPY src ./src
