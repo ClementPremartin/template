@@ -59,20 +59,20 @@ export default class UserRepository {
     }
   }
 
-  static async updateUserById(
-    id: number,
-    firstname: string,
-    lastname: string,
-    email: string
-  ): Promise<User> {
+  static async updateUserById(dataToUpdate: {
+    id: number
+    firstname?: string
+    lastname?: string
+    email?: string
+  }): Promise<User> {
     return await prisma.user.update({
       where: {
-        id: id,
+        id: dataToUpdate.id,
       },
       data: {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
+        firstname: dataToUpdate.firstname,
+        lastname: dataToUpdate.lastname,
+        email: dataToUpdate.email,
       },
     })
   }
