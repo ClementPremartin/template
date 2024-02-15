@@ -12,6 +12,7 @@ datasource db {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+  output = "../src/database/prisma/generated"
 }
 
 model Post {

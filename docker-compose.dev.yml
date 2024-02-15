@@ -10,6 +10,9 @@ services:
     volumes:
       - ./back-end/src:/app/src
       - /app/node_modules
+    environment:
+      DATABASE_URL: postgres://postgres:password@database:5432/postgres
+      TEST_DATABASE_URL: postgres://postgres:passwordclem@test-database:5432/postgres
     depends_on:
       - database
 

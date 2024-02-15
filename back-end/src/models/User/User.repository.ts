@@ -1,17 +1,13 @@
 import prisma from '../../database/client'
+import { User } from '../../database/prisma/generated'
 
 export default class UserRepository {
   //get all users from the database
-  static async getUsers(): Promise<
-    {
-      id: number
-      firstname: string
-      lastname: string
-    }[]
-  > {
+  static async getUsers(): Promise<User[]> {
     const users = await prisma.user.findMany({
       select: {
         id: true,
+        email: true,
         firstname: true,
         lastname: true,
       },
@@ -38,12 +34,7 @@ export default class UserRepository {
     firstname: string,
     lastname: string,
     email: string
-  ): Promise<{
-    id: number
-    email: string
-    firstname: string
-    lastname: string
-  }> {
+  ): Promise<User> {
     return await prisma.user.create({
       data: {
         firstname: firstname,
@@ -73,8 +64,8 @@ export default class UserRepository {
     firstname: string,
     lastname: string,
     email: string
-  ) {
-    await prisma.user.update({
+  ): Promise<User> {
+    return await prisma.user.update({
       where: {
         id: id,
       },
