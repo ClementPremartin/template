@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . /app
+COPY . ./
 
 FROM base as build
 COPY src ./src
