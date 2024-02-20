@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  web-app:
+  front-end:
     build:
-      context: ./web-app
+      context: ./front-end
       target: ci
 
     environment:

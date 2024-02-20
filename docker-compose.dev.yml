@@ -43,7 +43,7 @@ services:
   test-database:
     image: postgres:14.5-alpine
     environment:
-      POSTGRES_PASSWORD: passwordclem
+      POSTGRES_PASSWORD: password
     expose:
       - 5432
 
