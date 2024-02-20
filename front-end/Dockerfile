@@ -16,4 +16,5 @@ EXPOSE 3000
 CMD npm run dev
 
 FROM build as ci
+RUN npx playwright install --with-deps
 RUN npx playwright test
