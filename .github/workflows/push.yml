@@ -1,4 +1,4 @@
-name: build-test-deploy-staging
+name: build-test
 
 on: push
 
