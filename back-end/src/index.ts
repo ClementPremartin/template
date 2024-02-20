@@ -5,6 +5,8 @@ import UserResolver from './resolvers/User/User.resolver'
 import { buildSchema } from 'type-graphql'
 
 async function startServer() {
+  const PORT = 4000
+
   const schema = await buildSchema({
     resolvers: [UserResolver],
   })
@@ -14,10 +16,10 @@ async function startServer() {
   })
 
   const { url } = await startStandaloneServer(server, {
-    listen: { port: 4000 },
+    listen: { port: PORT, path: '/api' },
   })
 
-  console.log(`🚀  Server ready at: ${url}`)
+  console.log(`🚀 Server is ready at ${url}api`)
 }
 
 startServer()
