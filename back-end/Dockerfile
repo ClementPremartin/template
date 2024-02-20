@@ -13,7 +13,7 @@ RUN npx prisma generate
 
 FROM base as build
 COPY src ./src
-RUN npm run build
+RUN npm run compile
 
 FROM base as dev
 CMD npm run start:watch & npx nodemon -w package.json --exec 'npm install'
