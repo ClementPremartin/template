@@ -8,7 +8,7 @@ RUN npm install
 COPY . ./
 
 FROM base as build
-COPY src ./src
+COPY app ./app
 RUN npm run build
 
 FROM base AS dev
