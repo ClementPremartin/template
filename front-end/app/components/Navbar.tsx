@@ -2,11 +2,14 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false)
+  const [url, setUrl] = useState<String>('/')
+  const pathname = usePathname()
 
   const handleIsMenuOpen = (
     isState: boolean,
@@ -14,6 +17,10 @@ const Navbar = () => {
   ) => {
     setIsState(!isState)
   }
+
+  useEffect(() => {
+    setUrl(pathname)
+  }, [pathname])
 
   return (
     <nav className="bg-gray-800">
@@ -76,12 +83,20 @@ const Navbar = () => {
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                 <Link
                   href="/"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className={`${
+                    url === '/'
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  } rounded-md px-3 py-2 text-sm font-medium`}
                 >
                   Home
                 </Link>
                 <Link
-                  className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className={`${
+                    url === '/users'
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  } rounded-md px-3 py-2 text-sm font-medium`}
                   aria-current="page"
                   href="/users"
                 >
@@ -162,12 +177,20 @@ const Navbar = () => {
           {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
           <Link
             href="/"
-            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+            className={`${
+              url === '/'
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+            }bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium`}
           >
             Home
           </Link>
           <Link
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            className={`${
+              url === '/users'
+                ? 'bg-gray-900 text-white'
+                : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+            }bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium`}
             aria-current="page"
             href="/users"
           >
