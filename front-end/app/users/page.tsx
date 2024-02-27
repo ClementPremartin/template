@@ -1,5 +1,6 @@
 'use client'
 
+import Loader from '../components/Loader'
 import UserCard from '../components/UserCard'
 import { useEffect, useState } from 'react'
 
@@ -56,9 +57,8 @@ const UsersPage = () => {
   if (isLoading)
     return (
       <>
-        <div className="animate-pulse bg-red-600 w-52 flex flex-col rounded-md p-3">
-          <h1 className="flex justify-center">User Card</h1>
-        </div>
+        <h1>Users List</h1>
+        <Loader />
       </>
     )
 
