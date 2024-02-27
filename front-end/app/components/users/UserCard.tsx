@@ -1,4 +1,4 @@
-import { User } from '../users/page'
+import { User } from '../../users/page'
 import Image from 'next/image'
 
 type PropsType = {
