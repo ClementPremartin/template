@@ -146,7 +146,7 @@ const Navbar = () => {
                     ${
                       isProfileMenuOpen
                         ? 'transition ease-out duration-100 transform opacity-100 scale-100'
-                        : 'transition ease-in duration-75 transform opacity-0 scale-95'
+                        : 'transition ease-in duration-75 transform opacity-0 scale-95 -z-10'
                     }`}
                 role="menu"
                 aria-orientation="vertical"
