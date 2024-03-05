@@ -12,7 +12,8 @@ datasource db {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  output = "../src/database/prisma/generated"
+  output   = "../src/database/prisma/generated"
+  omitOutputFieldsByDefault = ["hashedPassword"]
 }
 
 model Post {
@@ -23,21 +24,31 @@ model Post {
   content   String?
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  authorId  String
 }
 
 model Profile {
   id     Int     @id @default(autoincrement())
   bio    String?
   user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
+  userId String  @unique
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
+  id        String    @id @default(uuid())
+  email     String    @unique
+  hashedPassword String
   firstname String
-  lastname String
-  posts   Post[]
-  profile Profile?
+  lastname  String
+  createdAt DateTime
+  posts     Post[]
+  profile   Profile?
+  Session   Session[]
+}
+
+model Session {
+  id     String @id @default(uuid())
+  sessionToken String @unique
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

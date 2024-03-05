@@ -35,15 +35,17 @@ export class AddUserArgs {
   @IsEmail()
   @IsString()
   email: string
+
+  @Field()
+  @IsString()
+  password: string
 }
 
 @ArgsType()
 export class UpdateUserArgs {
   @Field()
   @IsNotEmpty()
-  @IsNumber()
-  @IsPositive()
-  id: number
+  id: string
 
   @Field()
   @MinLength(1, {

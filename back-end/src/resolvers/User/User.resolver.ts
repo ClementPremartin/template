@@ -11,19 +11,19 @@ export default class UserResolver {
   }
 
   @Query(() => User)
-  getUserById(@Arg('id') id: number): Promise<User> {
+  getUserById(@Arg('id') id: string): Promise<User> {
     return UserRepository.getUserById(id)
   }
 
   @Mutation(() => User)
   createUser(
-    @Args() { firstname, lastname, email }: AddUserArgs
+    @Args() { firstname, lastname, email, password }: AddUserArgs
   ): Promise<User> {
-    return UserRepository.createUser(firstname, lastname, email)
+    return UserRepository.createUser(firstname, lastname, email, password)
   }
 
   @Mutation(() => String)
-  deleteUserById(@Arg('id') id: number): Promise<string> {
+  deleteUserById(@Arg('id') id: string): Promise<string> {
     return UserRepository.deleteUserById(id)
   }
 

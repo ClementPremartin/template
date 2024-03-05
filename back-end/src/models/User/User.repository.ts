@@ -1,3 +1,4 @@
+import { hashSync } from 'bcryptjs'
 import prisma from '../../database/client'
 import { User } from '../../database/prisma/generated'
 
@@ -10,17 +11,18 @@ export default class UserRepository {
         email: true,
         firstname: true,
         lastname: true,
+        createdAt: true,
       },
-      orderBy: { id: 'desc' },
     })
     return users
   }
 
-  static async getUserById(id: number): Promise<{
-    id: number
+  static async getUserById(id: string): Promise<{
+    id: string
     email: string
     firstname: string
     lastname: string
+    createdAt: Date
   }> {
     const user = await prisma.user.findUniqueOrThrow({
       where: {
@@ -33,18 +35,21 @@ export default class UserRepository {
   static async createUser(
     firstname: string,
     lastname: string,
-    email: string
+    email: string,
+    password: string
   ): Promise<User> {
     return await prisma.user.create({
       data: {
         firstname: firstname,
         lastname: lastname,
         email: email,
+        hashedPassword: hashSync(password),
+        createdAt: new Date(),
       },
     })
   }
 
-  static async deleteUserById(id: number) {
+  static async deleteUserById(id: string) {
     const user = await this.getUserById(id)
 
     if (user !== null) {
@@ -60,7 +65,7 @@ export default class UserRepository {
   }
 
   static async updateUserById(dataToUpdate: {
-    id: number
+    id: string
     firstname?: string
     lastname?: string
     email?: string
