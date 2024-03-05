@@ -4,13 +4,18 @@ import {
   IsNumber,
   IsPositive,
   IsString,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator'
 import { ArgsType, Field } from 'type-graphql'
 
+const passwordRegExp = new RegExp(
+  '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})'
+)
+
 @ArgsType()
-export class AddUserArgs {
+export class SignUpArgs {
   @Field()
   @MinLength(1, {
     message: 'Firstname must be at least one character long',
@@ -38,6 +43,10 @@ export class AddUserArgs {
 
   @Field()
   @IsString()
+  @Matches(passwordRegExp, {
+    message:
+      'Password should have at least 1 number, lower, upper & special char and have at least 8 characters',
+  })
   password: string
 }
 
@@ -71,4 +80,17 @@ export class UpdateUserArgs {
   @IsEmail()
   @IsString()
   email?: string
+}
+
+@ArgsType()
+export class SignInArgs {
+  @Field()
+  @IsNotEmpty()
+  @IsEmail()
+  email: string
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  password: string
 }

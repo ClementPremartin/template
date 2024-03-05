@@ -1,7 +1,9 @@
-import { Arg, Args, Mutation, Query, Resolver } from 'type-graphql'
+import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql'
 import UserRepository from '../../models/User/User.repository'
-import { AddUserArgs, UpdateUserArgs } from './User.input'
+import { SignInArgs, SignUpArgs, UpdateUserArgs } from './User.input'
 import { User } from '../../database/prisma/generated/models'
+import { setSessionIdInCookie } from '../../http-utils'
+import { GlobalContext } from '../..'
 
 @Resolver()
 export default class UserResolver {
@@ -16,10 +18,20 @@ export default class UserResolver {
   }
 
   @Mutation(() => User)
-  createUser(
-    @Args() { firstname, lastname, email, password }: AddUserArgs
+  signUp(
+    @Args() { firstname, lastname, email, password }: SignUpArgs
   ): Promise<User> {
     return UserRepository.createUser(firstname, lastname, email, password)
+  }
+
+  @Mutation(() => User)
+  async signIn(
+    @Args() { email, password }: SignInArgs,
+    @Ctx() context: GlobalContext
+  ): Promise<User> {
+    const { user, session } = await UserRepository.signIn(email, password)
+    setSessionIdInCookie(context, session.id)
+    return user
   }
 
   @Mutation(() => String)

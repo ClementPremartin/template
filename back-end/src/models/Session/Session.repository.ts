@@ -1,4 +1,4 @@
-import { User } from '../../database/prisma/generated'
+import { Session, User } from '../../database/prisma/generated'
 import prisma from '../../database/client'
 import { randomBytes } from 'crypto'
 
@@ -14,6 +14,20 @@ export default class SessionRepository {
         userId: user.id,
       },
     })
+  }
+
+  static async findById(sessionToken: string): Promise<Session | null> {
+    const session = await prisma.session.findUnique({
+      where: {
+        id: sessionToken,
+      },
+    })
+
+    if (!session) {
+      return null
+    }
+
+    return session
   }
 
   static async deleteSession(user: User, sessionToken: string) {
