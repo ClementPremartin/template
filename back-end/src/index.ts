@@ -7,6 +7,7 @@ import UserRepository from './models/User/User.repository'
 import { getSessionIdInCookie } from './http-utils'
 import { User } from './database/prisma/generated/models/User'
 import { IncomingMessage } from 'http'
+import PostResolver from './resolvers/Post/Post.resolver'
 
 export type GlobalContext = {
   res: any // Adjust the type according to your server's response type
@@ -18,7 +19,7 @@ async function startServer() {
   const PORT = 4000
 
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, PostResolver],
     authChecker: async ({ context }) => {
       return Boolean(context.user)
     },
