@@ -30,19 +30,27 @@ export default class SessionRepository {
     return session
   }
 
-  static async deleteSession(user: User, sessionToken: string) {
+  static async deleteSession(
+    user: User,
+    sessionToken: string
+  ): Promise<Session> {
     const existingSession = await prisma.session.findFirst({
       where: {
         userId: user.id,
         sessionToken: sessionToken,
       },
     })
-    if (existingSession) {
-      await prisma.session.delete({
-        where: {
-          id: existingSession.id,
-        },
-      })
+
+    if (!existingSession) {
+      throw new Error('There is no existing Session')
     }
+
+    await prisma.session.delete({
+      where: {
+        id: existingSession.id,
+      },
+    })
+
+    return existingSession
   }
 }

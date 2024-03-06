@@ -10,8 +10,13 @@ import {
 import UserRepository from '../../models/User/User.repository'
 import { SignInArgs, SignUpArgs, UpdateUserArgs } from './User.input'
 import { User } from '../../database/prisma/generated/models'
-import { setSessionIdInCookie } from '../../http-utils'
+import {
+  getSessionIdInCookie,
+  removeCookie,
+  setSessionIdInCookie,
+} from '../../http-utils'
 import { GlobalContext } from '../..'
+import SessionRepository from '../../models/Session/Session.repository'
 
 @Resolver()
 export default class UserResolver {
@@ -40,8 +45,24 @@ export default class UserResolver {
     @Ctx() context: GlobalContext
   ): Promise<User> {
     const { user, session } = await UserRepository.signIn(email, password)
-    setSessionIdInCookie(context, session.id)
+    setSessionIdInCookie(context, session)
     return user
+  }
+
+  @Authorized()
+  @Mutation(() => String)
+  signOut(@Ctx() context: GlobalContext): String {
+    const sessionToken = getSessionIdInCookie(context.req)
+    if (!context.user) {
+      throw new Error('There is no User to logOut')
+    }
+    if (!sessionToken) {
+      throw new Error('User has no cookie')
+    }
+    removeCookie(context, sessionToken)
+    SessionRepository.deleteSession(context.user, sessionToken)
+
+    return `Session ${sessionToken} has been removed successfuly`
   }
 
   @Authorized()

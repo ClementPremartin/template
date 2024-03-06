@@ -1,5 +1,6 @@
 import { IncomingMessage } from 'http'
 import { GlobalContext } from '.'
+import { Session } from './database/prisma/generated'
 const MAX_AGE_DAYS = 365
 
 export const getSessionIdInCookie = (
@@ -24,14 +25,15 @@ export const getSessionIdInCookie = (
   return sessionIdCookie.split('=')[1]
 }
 
-export const setSessionIdInCookie = (
-  ctx: GlobalContext,
-  sessionToken: string
-) => {
-  ctx.res.cookie('sessionToken', sessionToken, {
+export const setSessionIdInCookie = (ctx: GlobalContext, session: Session) => {
+  ctx.res.cookie('sessionToken', session.sessionToken, {
     httpOnly: true,
     secure: true,
     sameSite: true,
     maxAge: 1000 * 60 * 60 * 24 * MAX_AGE_DAYS,
   })
+}
+
+export const removeCookie = (ctx: GlobalContext, sessionToken: string) => {
+  ctx.res.clearCookie(sessionToken, { domain: 'localhost', path: '/' })
 }
