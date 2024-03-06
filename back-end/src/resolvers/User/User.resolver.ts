@@ -1,4 +1,12 @@
-import { Arg, Args, Ctx, Mutation, Query, Resolver } from 'type-graphql'
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  Mutation,
+  Query,
+  Resolver,
+} from 'type-graphql'
 import UserRepository from '../../models/User/User.repository'
 import { SignInArgs, SignUpArgs, UpdateUserArgs } from './User.input'
 import { User } from '../../database/prisma/generated/models'
@@ -7,11 +15,13 @@ import { GlobalContext } from '../..'
 
 @Resolver()
 export default class UserResolver {
+  @Authorized()
   @Query(() => [User])
   getUsers(): Promise<User[]> {
     return UserRepository.getUsers()
   }
 
+  @Authorized()
   @Query(() => User)
   getUserById(@Arg('id') id: string): Promise<User> {
     return UserRepository.getUserById(id)
@@ -34,11 +44,13 @@ export default class UserResolver {
     return user
   }
 
+  @Authorized()
   @Mutation(() => String)
   deleteUserById(@Arg('id') id: string): Promise<string> {
     return UserRepository.deleteUserById(id)
   }
 
+  @Authorized()
   @Mutation(() => User)
   updateUserById(@Args() { id, firstname, lastname, email }: UpdateUserArgs) {
     const dataToUpdate = {

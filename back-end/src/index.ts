@@ -6,7 +6,6 @@ import { buildSchema } from 'type-graphql'
 import UserRepository from './models/User/User.repository'
 import { getSessionIdInCookie } from './http-utils'
 import { User } from './database/prisma/generated/models/User'
-import { ExpressContext } from 'apollo-server-express'
 import { IncomingMessage } from 'http'
 
 export type GlobalContext = {
@@ -34,10 +33,10 @@ async function startServer() {
   const { url } = await startStandaloneServer(server, {
     listen: { port: PORT, path: '/api' },
     context: async (context): Promise<GlobalContext> => {
-      const sessionId = getSessionIdInCookie(context.req)
-      const user = !sessionId
+      const sessionToken = getSessionIdInCookie(context.req)
+      const user = !sessionToken
         ? null
-        : await UserRepository.findBySessionId(sessionId)
+        : await UserRepository.findBySessionId(sessionToken)
       return { res: context.res, req: context.req, user }
     },
   })

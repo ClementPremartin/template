@@ -17,9 +17,9 @@ export default class SessionRepository {
   }
 
   static async findById(sessionToken: string): Promise<Session | null> {
-    const session = await prisma.session.findUnique({
+    const session = await prisma.session.findFirst({
       where: {
-        id: sessionToken,
+        sessionToken: sessionToken,
       },
     })
 

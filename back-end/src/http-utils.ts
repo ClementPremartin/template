@@ -15,7 +15,7 @@ export const getSessionIdInCookie = (
 
   const cookies = cookieHeader.split(';').map((cookie) => cookie.trim())
   const sessionIdCookie = cookies.find((cookie) =>
-    cookie.startsWith('sessionId=')
+    cookie.startsWith('sessionToken=')
   )
   if (!sessionIdCookie) {
     return ''
@@ -24,8 +24,11 @@ export const getSessionIdInCookie = (
   return sessionIdCookie.split('=')[1]
 }
 
-export const setSessionIdInCookie = (ctx: GlobalContext, sessionId: string) => {
-  ctx.res.cookie('sessionId', sessionId, {
+export const setSessionIdInCookie = (
+  ctx: GlobalContext,
+  sessionToken: string
+) => {
+  ctx.res.cookie('sessionToken', sessionToken, {
     httpOnly: true,
     secure: true,
     sameSite: true,
