@@ -38,7 +38,7 @@ docker-compose -f docker-compose.dev.yml up --build
 Cela lancera tous les containers nécessaires pour l'application.
 
 ## Prisma
-![prisma-2](https://github.com/ClementPremartin/template/assets/99645627/fa534aa2-5dd5-43a2-8703-efa0d0d1ed6d =250x)
+![Preview-Prisma-LightLogo](https://github.com/ClementPremartin/template/assets/99645627/5cd018ca-a5cb-4af4-a8b6-6ce2d3cc32a1)
 
 Prisma est un ORM (Object-Relational Mapping) moderne pour Node.js et TypeScript. Il simplifie l'interaction avec la base de données en vous permettant de définir votre schéma de base de données à l'aide d'une syntaxe conviviale et en générant du code TypeScript pour accéder à la base de données.
 
