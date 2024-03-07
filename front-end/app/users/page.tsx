@@ -112,7 +112,12 @@ const UsersPage = () => {
       </>
     )
 
-  if (isError) return <p>Error : {error}</p>
+  if (isError)
+    return (
+      <>
+        <h1>Users List</h1> <p>Error : {error}</p>
+      </>
+    )
   return (
     <>
       <div className="flex justify-between mt-5 mr-5 pl-5">
