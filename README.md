@@ -10,6 +10,8 @@ Le projet est organisé en deux dossiers principaux :
 - `./back-end`: Contient le code source du back-end développé avec Node.js et GraphQL.
 
 ## Technologies Utilisées
+![4a2be73b1e2efb44355436c40bf496dd](https://github.com/ClementPremartin/template/assets/99645627/eb2aab4a-3674-43b7-a44b-c24f2c08e47d)
+![graphql_logo_icon_171045](https://github.com/ClementPremartin/template/assets/99645627/7441ef43-c96c-461f-9548-bfd41782eea3)
 
 - **Front-end**: Next.js
 - **Back-end**: Node.js, GraphQL
@@ -73,6 +75,7 @@ Cela ouvrira une interface utilisateur à l'addrresse http://localhost:5555 dans
 ## Tests
 
 ### Tests Back-end
+![103283236](https://github.com/ClementPremartin/template/assets/99645627/0c75bcfd-7526-45c4-8d8c-fffc2aeb01a3)
 
 Pour exécuter les tests unitaires du back-end en local, suivez ces étapes :
 
@@ -93,6 +96,7 @@ npm run test
 ```
 
 ### Tests Front-end
+![playwright-logo-22FA8B9E63-seeklogo com](https://github.com/ClementPremartin/template/assets/99645627/6b649334-6c40-4c49-b6df-8333c1609d7b)
 
 Les tests d'intégration du front-end sont écrits avec Playwright. Pour les exécuter, vous pouvez utiliser la commande suivante à partir du répertoire `front-end` :
 
