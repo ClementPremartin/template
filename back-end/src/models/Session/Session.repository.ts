@@ -53,4 +53,8 @@ export default class SessionRepository {
 
     return existingSession
   }
+
+  static async findSessions() {
+    return await prisma.session.findMany()
+  }
 }

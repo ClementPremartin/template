@@ -3,7 +3,10 @@ import dotenv from 'dotenv'
 
 import { Prisma, PrismaClient } from '@prisma/client'
 import { hashSync } from 'bcryptjs'
-import UserRepository from '../../models/User/User.repository'
+import UserRepository, {
+  INVALID_CREDENTIALS_ERROR_MESSAGE,
+} from '../../models/User/User.repository'
+import SessionRepository from '../../models/Session/Session.repository'
 
 dotenv.config({ path: '../.env.test' })
 
@@ -55,5 +58,95 @@ describe('AppUserRepository integration', () => {
     const result = await UserRepository.findByMail('jeanjeanbon@email.com')
     expect(result?.email).toBe('jeanjeanbon@email.com')
     expect(result?.firstname).toBe('Jeanjean')
+  })
+  describe('SignIn', () => {
+    describe('When email address does not belong to existing user', () => {
+      it('Throws invalid credentials error', async () => {
+        const email = 'unknow@userInfo.com'
+        expect(() => UserRepository.signIn(email, 'whatever')).rejects.toThrow(
+          INVALID_CREDENTIALS_ERROR_MESSAGE
+        )
+      })
+    })
+    const email = 'jean@user.com'
+    describe('When password is invalid', () => {
+      it('Throws invalid credentials error', async () => {
+        await UserRepository.createUser(
+          'Jean',
+          'User',
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        expect(() =>
+          UserRepository.signIn(email, 'wrong-password')
+        ).rejects.toThrow(INVALID_CREDENTIALS_ERROR_MESSAGE)
+      })
+    })
+    describe('When pasword is valid', () => {
+      it('Create session in database', async () => {
+        await UserRepository.createUser(
+          'Jean',
+          'User',
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        const signIn = await UserRepository.signIn(
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        const sessions = await SessionRepository.findSessions()
+        expect(sessions).toHaveLength(1)
+        expect(signIn.session.sessionToken).toBe(sessions[0].sessionToken)
+      })
+      it('Returns user and session', async () => {
+        await UserRepository.createUser(
+          'Jean',
+          'User',
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        const signIn = await UserRepository.signIn(
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        expect(signIn).toHaveProperty('user')
+        expect(signIn).toHaveProperty('session')
+      })
+    })
+  })
+  describe('SignOut', () => {
+    const email = 'jean@user.com'
+    describe('When user passed does not exits', () => {
+      it('Return error message', async () => {
+        const user = await UserRepository.createUser(
+          'Jean',
+          'User',
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        expect(
+          SessionRepository.deleteSession(user, 'session-token')
+        ).rejects.toThrow('There is no existing Session')
+      })
+    })
+    describe('When passed existing user', () => {
+      it('Deletes session in database', async () => {
+        const user = await UserRepository.createUser(
+          'Jean',
+          'User',
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        const signInResult = await UserRepository.signIn(
+          email,
+          'mot-de-passe-nul-de-jean'
+        )
+        const result = await SessionRepository.deleteSession(
+          user,
+          signInResult.session.sessionToken
+        )
+        expect(result.id).toContain(signInResult.session.id)
+      })
+    })
   })
 })
