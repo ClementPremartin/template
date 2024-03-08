@@ -8,8 +8,7 @@
     "start": "npm run compile && node ./build/index.js",
     "start:watch": "tsc && (tsc -w & nodemon ./build/index.js)",
     "test": "jest --runInBand",
-    "test:watch": "jest --watchAll --runInBand",
-    "prisma:migrate:dev": "prisma migrate dev"
+    "test:watch": "jest --watchAll --runInBand"
   },
   "keywords": [],
   "author": "",

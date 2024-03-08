@@ -9,7 +9,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
       - name: Run Prisma migrations for back-end
-        run: docker-compose -f docker-compose.ci.back-end.yml run --rm back-end npm run prisma:migrate:dev
+        run: docker-compose -f docker-compose.ci.back-end.yml run --rm back-end npx prisma migrate dev
       - name: Build and test back-end
         run: docker compose -f docker-compose.ci.back-end.yml up --build --exit-code-from back-end
 
