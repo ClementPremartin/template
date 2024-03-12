@@ -31,6 +31,8 @@ test.beforeEach(async ({ page }) => {
 test.describe('Users Page', () => {
   test('should contains title', async ({ page }) => {
     await expect(page.getByText('Users List')).toBeVisible()
+  })
+  test('should contains user list', async ({ page }) => {
     await expect(page.getByText('Harry Potter')).toBeVisible()
     await expect(page.getByText('harrypotter@email.com')).toBeVisible()
     await expect(page.getByText('Ron Wisley')).toBeVisible()
